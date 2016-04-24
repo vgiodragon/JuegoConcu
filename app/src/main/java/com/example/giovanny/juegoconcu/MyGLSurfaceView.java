@@ -45,9 +45,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 if(jostinDentro(currentX,currentY)){
                     mRenderer.Mx=10*(currentX-Xo)/width;
                     mRenderer.My=-5*(currentY-Yo)/height;
-                    Log.d("tocar","h: "+height+"_Y0: "+Yo+"_cY: "+currentY+"_currentY-Yo: "+mRenderer.My);
-
-
                 }
                 else if(logoDentro(currentX,currentY)){
                     mRenderer.activado = !mRenderer.activado;

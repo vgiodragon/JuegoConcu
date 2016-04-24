@@ -5,6 +5,8 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
 import com.example.giovanny.juegoconcu.Figuras.Cuadrado;
+import com.example.giovanny.juegoconcu.Elementos.Pantalla;
+import com.example.giovanny.juegoconcu.Figuras.Usuario;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -14,14 +16,14 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
-    private Cuadrado bb1;
-    private Cuadrado bb12;
-    private Cuadrado campo;
-    private Cuadrado analogo;
-    private Cuadrado joystick;
-    private Cuadrado logo;
-    private Cuadrado logo2;
+
+
+    Usuario user[];
+
     private Context ctx;
+
+    private Pantalla pantalla;
+
     private static float angleCube = 0;     // rotational angle in degree for cube
     private static float speedCube = -9f; // rotational speed for cube
 
@@ -31,21 +33,20 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     float bbx;
     float bby;
 
+    boolean dentroY;
+
     boolean activado;
 
     public MyGLRenderer(Context ctx){
-        bb1 = new Cuadrado(R.drawable.bb1,false);
-        bb12 = new Cuadrado(R.drawable.bb12,false);
-        campo = new Cuadrado(R.drawable.campo,true);
-        analogo = new Cuadrado(R.drawable.analogo,false);
-        joystick = new Cuadrado(R.drawable.joystick,false);
-        logo = new Cuadrado(R.drawable.dragun,false);
-        logo2 = new Cuadrado(R.drawable.dragun12,false);
+
+        pantalla = new Pantalla();///limite de x:12.10   y:6.20
+        user = new Usuario[]{new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,10)};
 
         Mx=My=0f;
         bbx=bby=0f;
 
         activado=false;
+        dentroY=false;
 
         this.ctx=ctx;
     }
@@ -62,19 +63,11 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         gl.glDisable(GL10.GL_DITHER);      // Disable dithering for better performance
 
         // You OpenGL|ES initialization code here
-
         gl.glEnable(GL10.GL_TEXTURE_2D);  // Enable texture (NEW)
         gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);  // Set Alpha Blend Function
 
         // ......
-        // Setup Texture, each time the surface is created (NEW)
-        bb1.loadTexture(gl, ctx);    // Load image into Texture (NEW)
-        bb12.loadTexture(gl, ctx);    // Load image into Texture (NEW)
-        campo.loadTexture(gl, ctx);    // Load image into Texture (NEW)
-        analogo.loadTexture(gl, ctx);    // Load image into Texture (NEW)
-        joystick.loadTexture(gl, ctx);    // Load image into Texture (NEW)
-        logo.loadTexture(gl, ctx);    // Load image into Texture (NEW)
-        logo2.loadTexture(gl, ctx);    // Load image into Texture (NEW)
+        CargarImagenes(gl);
     }
 
     @Override
@@ -110,55 +103,46 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // You OpenGL|ES rendering code here
         gl.glLoadIdentity();                 // Reset model-view matrix ( NEW )
         // Translate right, relative to the previous translation ( NEW )
-        gl.glPushMatrix();
-            gl.glTranslatef(0f, 0.0f, -7.0f);
-            campo.draw(gl);
-        gl.glPopMatrix();
-
-        gl.glPushMatrix();
-            gl.glTranslatef(-3.4f, -1.5f, -5.0f);
-            gl.glScalef(0.4f, 0.4f, 0.4f);
-            joystick.draw(gl);
-        gl.glPopMatrix();
-
-        gl.glPushMatrix();
-            gl.glTranslatef(-3.32f, -1.45f, -4.9f);
-            gl.glScalef(0.3f, 0.3f, 0.3f);
-            gl.glTranslatef(Mx, My, 0f);
-            analogo.draw(gl);
-        gl.glPopMatrix();
-
-        gl.glPushMatrix();
-            gl.glTranslatef(3.4f, -1.5f, -5.0f);
-            gl.glScalef(0.4f, 0.4f, 0.4f);
-            if(activado)
-                logo2.draw(gl);
-            else
-                logo.draw(gl);
-        gl.glPopMatrix();
-
-        gl.glPushMatrix();
-            gl.glTranslatef(0f, 2.0f, -6.0f);  // Translate right and into the screen (NEW)
-            gl.glScalef(0.4f, 0.4f, 0.4f);
-            gl.glTranslatef(bbx, bby, 0f);
-            gl.glRotatef(angleCube, 0f, 0f, 1f); // Rotate
-            if(activado)
-                bb12.draw(gl);                       // Draw quad ( NEW )
-            else
-                bb1.draw(gl);                       // Draw quad ( NEW )
-        gl.glPopMatrix();
+        pantalla.Draw(gl, Mx, My,2);
+        user[0].draw(gl, bbx, bby, angleCube, activado);
         // Update the rotational angle after each refresh.
 
         if(activado){
-            bbx+=Mx/10;
-            bby+=My/10;
+            VerificoX();
+            VerificoY();
             angleCube += speedCube;
             angleCube=angleCube%360;
         }
-        bbx+=Mx/10;
-        bby+=My/10;
+        VerificoX();
+        VerificoY();
         angleCube += speedCube;
         angleCube=angleCube%360;
+
+    }
+
+    public void VerificoX(){
+        if(user[0].fueraX(bbx)==0)
+            bbx+=Mx/10;
+        else if(user[0].fueraX(bbx)==-1)
+            bbx-=Mx/2;
+        else if(user[0].fueraX(bbx)==1)
+            bbx-=Mx/2;
+    }
+
+    public void VerificoY(){
+        if(user[0].fueraY(bby)==0)
+            bby += My / 10;
+        else if(user[0].fueraY(bby)==-1)
+            bby -= 3*My / 5;
+        else if(user[0].fueraY(bby)==1)
+            bby -= My / 2;
+    }
+
+
+    public void CargarImagenes(GL10 gl){
+        pantalla.loadTexture(gl,ctx);
+        user[0].loadTexture(gl, ctx);    // Load image into Texture (NEW)
+        // Setup Texture, each time the surface is created (NEW)
 
     }
 }
