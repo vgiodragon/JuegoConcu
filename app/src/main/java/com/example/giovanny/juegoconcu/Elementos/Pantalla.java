@@ -12,7 +12,6 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class Pantalla {
 
-    //Barra de Vida y Poder
     private Cuadrado campo;
     private Cuadrado joystick;
     private Cuadrado analogo;
@@ -54,7 +53,7 @@ public class Pantalla {
 
         gl.glPushMatrix();
             gl.glTranslatef(-3.9f, 1.95f, -5.0f);
-            gl.glScalef(0.01f, 0.05f, 1f);
+            gl.glScalef(0.002f, 0.05f, 1f);
                 for(int i=0;i<cantVida;i++){
                     vida.draw(gl);
                     gl.glTranslatef(12f, 0f, 0f);

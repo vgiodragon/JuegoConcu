@@ -4,9 +4,9 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 
-import com.example.giovanny.juegoconcu.Figuras.Cuadrado;
 import com.example.giovanny.juegoconcu.Elementos.Pantalla;
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
+import com.example.giovanny.juegoconcu.Figuras.Versus;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -16,16 +16,13 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
-
-
-    Usuario user[];
+    Versus versus;
+    Usuario user;
 
     private Context ctx;
 
     private Pantalla pantalla;
 
-    private static float angleCube = 0;     // rotational angle in degree for cube
-    private static float speedCube = -9f; // rotational speed for cube
 
     float Mx;
     float My;
@@ -35,17 +32,15 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     boolean dentroY;
 
-    boolean activado;
 
     public MyGLRenderer(Context ctx){
 
         pantalla = new Pantalla();///limite de x:12.10   y:6.20
-        user = new Usuario[]{new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,10)};
-
+        user = new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
+        versus = new Versus(user);
         Mx=My=0f;
         bbx=bby=0f;
 
-        activado=false;
         dentroY=false;
 
         this.ctx=ctx;
@@ -103,45 +98,54 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // You OpenGL|ES rendering code here
         gl.glLoadIdentity();                 // Reset model-view matrix ( NEW )
         // Translate right, relative to the previous translation ( NEW )
-        pantalla.Draw(gl, Mx, My,2);
-        user[0].draw(gl, bbx, bby, angleCube, activado);
+        pantalla.Draw( gl, Mx, My, user.getVida());
+        user.draw(gl, bbx, bby);
+        versus.draw(gl, bbx, bby);
         // Update the rotational angle after each refresh.
 
-        if(activado){
-            VerificoX();
-            VerificoY();
-            angleCube += speedCube;
-            angleCube=angleCube%360;
-        }
         VerificoX();
         VerificoY();
-        angleCube += speedCube;
-        angleCube=angleCube%360;
 
     }
 
     public void VerificoX(){
-        if(user[0].fueraX(bbx)==0)
+        if(user.fueraX(bbx)==0)
             bbx+=Mx/10;
-        else if(user[0].fueraX(bbx)==-1)
+        else if(user.fueraX(bbx)==-1){
+            user.resVida(1);
             bbx-=Mx/2;
-        else if(user[0].fueraX(bbx)==1)
-            bbx-=Mx/2;
+        }
+        else if(user.fueraX(bbx)==1) {
+            user.resVida(1);
+            bbx -= Mx / 2;
+        }
     }
 
     public void VerificoY(){
-        if(user[0].fueraY(bby)==0)
+        if(user.fueraY(bby)==0)
             bby += My / 10;
-        else if(user[0].fueraY(bby)==-1)
-            bby -= 3*My / 5;
-        else if(user[0].fueraY(bby)==1)
+        else if(user.fueraY(bby)==-1) {
+            user.resVida(1);
+            bby -= 3 * My / 5;
+        }
+        else if(user.fueraY(bby)==1) {
+            user.resVida(1);
             bby -= My / 2;
+        }
     }
 
+    public void setActivado(boolean activado) {
+        user.setActivado(activado);
+    }
+
+    public boolean getActivado() {
+        return user.getActivado();
+    }
 
     public void CargarImagenes(GL10 gl){
         pantalla.loadTexture(gl,ctx);
-        user[0].loadTexture(gl, ctx);    // Load image into Texture (NEW)
+        user.loadTexture(gl, ctx);    // Load image into Texture (NEW)
+        versus.loadTexture(gl,ctx);
         // Setup Texture, each time the surface is created (NEW)
 
     }

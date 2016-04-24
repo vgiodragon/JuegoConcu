@@ -33,7 +33,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
     public boolean onTouchEvent(final MotionEvent evt) {
         float currentX = evt.getX();
         float currentY = evt.getY();
-        //Log.d("tocar","w: "+width+"_h: "+height+"_cX: "+currentX+"_cY: "+currentY);
         switch (evt.getAction()) {
             case MotionEvent.ACTION_UP:
                 mRenderer.Mx=0f;
@@ -41,21 +40,17 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-                // Modify rotational angles according to movement
                 if(jostinDentro(currentX,currentY)){
                     mRenderer.Mx=10*(currentX-Xo)/width;
                     mRenderer.My=-5*(currentY-Yo)/height;
                 }
                 else if(logoDentro(currentX,currentY)){
-                    mRenderer.activado = !mRenderer.activado;
+                    mRenderer.setActivado(!mRenderer.getActivado());
                 }
-
                 break;
-
-            // Save current x, y
         }
 
-        return true; // Event handled
+        return true;
     }
 
     private boolean jostinDentro(float x,float y){
