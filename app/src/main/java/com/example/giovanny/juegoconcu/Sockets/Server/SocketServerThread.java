@@ -7,6 +7,8 @@ import com.example.giovanny.juegoconcu.SalaActividad;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -35,8 +37,8 @@ public class SocketServerThread extends Thread {
                 // Socket object
                 Socket socket = serverSocket.accept();
                 count++;
-                activity.addMessage( "Player" + count + " _ "///OBTENGO INFO DEL CONECTADO
-                        + socket.getInetAddress() + ":"+ socket.getPort() + "\n");
+                activity.addMessage("Player" + count + " _ "///OBTENGO INFO DEL CONECTADO
+                        + socket.getInetAddress() + ":" + socket.getPort() + "\n");
 
                 activity.runOnUiThread(new Runnable() {
                     @Override
@@ -45,10 +47,13 @@ public class SocketServerThread extends Thread {
                     }
                 });
 
-                /*SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
-                        new SocketServerReplyThread(activity, socket,activity.getMessage());
-                socketServerReplyThread.run();
-                */
+                OutputStream outputStream;
+
+                outputStream = socket.getOutputStream();
+                PrintStream printStream = new PrintStream(outputStream);
+                printStream.print("Hola desde el servidor");
+                printStream.close();
+
                 Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
 
                ///Voy a esperar un mensaje del cliente

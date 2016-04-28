@@ -38,7 +38,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
         try {
             socket = new Socket(dstAddress, dstPort);
             //RECIBO MENSAJE
-            /*ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
                     1024);
             byte[] buffer = new byte[1024];
 
@@ -52,7 +52,6 @@ public class Client extends AsyncTask<Void, Void, Void> {
                 byteArrayOutputStream.write(buffer, 0, bytesRead);
                 response += byteArrayOutputStream.toString("UTF-8");
             }
-            */
 
 
             SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
