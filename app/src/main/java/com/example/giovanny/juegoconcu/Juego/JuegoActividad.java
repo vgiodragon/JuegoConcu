@@ -7,13 +7,17 @@ import android.util.DisplayMetrics;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.R;
+import com.example.giovanny.juegoconcu.VUsuario;
 
 import java.util.ArrayList;
 
 public class JuegoActividad extends AppCompatActivity {
 
     MyGLSurfaceView mGLView;
+    VUsuario vuser;
+    VUsuario vadver;
     Usuario user;
+    Usuario adver;
     ArrayList<Usuario> adversarios;
 
     @Override
@@ -22,8 +26,20 @@ public class JuegoActividad extends AppCompatActivity {
         setContentView(R.layout.activity_juego);
         // Create a GLSurfaceView instance and set it
         Intent intent = getIntent();
-        user= (Usuario) intent.getSerializableExtra("usuario");
-        adversarios= (ArrayList<Usuario>) intent.getSerializableExtra("adversarios");
+        //user= intent.getParcelableExtra("usuario");
+        //Bundle b = intent.getExtras();
+        //if (b != null)
+        vuser= (VUsuario) intent.getSerializableExtra("vusuarioN");
+        vuser.setXo(1f);
+        vuser.setYo(1f);
+        user=new Usuario(vuser);
+        user.InicioLyC();
+
+        //adver= (Usuario)intent.getSerializableExtra("adversario1");
+        //adver.InicioC();
+        adversarios= new ArrayList<>();
+        //adversarios.add(adver);
+
         // as the ContentView for this Activity
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);

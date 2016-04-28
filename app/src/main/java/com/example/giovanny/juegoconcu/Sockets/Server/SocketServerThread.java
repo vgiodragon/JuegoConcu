@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.HiloConexion;
 import com.example.giovanny.juegoconcu.SalaActividad;
+import com.example.giovanny.juegoconcu.VUsuario;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,9 +26,9 @@ public class SocketServerThread extends Thread {
     SalaActividad activity;
     String respuesta="";
     private ArrayList<Usuario> adversarios;
-    private Usuario user;
+    private VUsuario user;
 
-    public SocketServerThread(SalaActividad activity,Usuario user,ArrayList<Usuario> adversarios){
+    public SocketServerThread(SalaActividad activity,VUsuario user,ArrayList<Usuario> adversarios){
         this.activity=activity;
         this.user=user;
         this.adversarios=adversarios;
@@ -39,7 +40,7 @@ public class SocketServerThread extends Thread {
             // create ServerSocket using specified port
             serverSocket = new ServerSocket(socketServerPORT);
 
-            while (true) {
+            while (true) {Log.d("gioTo", "Espero que alguien se conecte");
                 Socket socket = serverSocket.accept();
                 count++;
                 activity.addMessage("Player" + count + " _ "///OBTENGO INFO DEL CONECTADO
@@ -55,11 +56,11 @@ public class SocketServerThread extends Thread {
 
                 //activity.Mandar(socket,"Hi form the Server");
                 String estado="";
-                estado=user.getEstado();
-                activity.Mandar(socket, "Estado Servidor :"+estado);
-                //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
+                estado="Estado Servidor :"+user.getEstado();
+                activity.Mandar(socket, estado);
+                Log.d("gioTo", estado);
                 respuesta= activity.Recibir(socket);
-                //Log.d("gioTo", respuesta);
+                Log.d("gioTo", respuesta);
                 HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
                 hc.start();
             }

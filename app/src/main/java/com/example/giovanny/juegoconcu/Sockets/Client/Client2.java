@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.HiloConexion;
 import com.example.giovanny.juegoconcu.SalaActividad;
+import com.example.giovanny.juegoconcu.VUsuario;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -23,9 +24,9 @@ public class Client2 extends Thread {
     TextView textResponse;
     SalaActividad activity;
     private ArrayList<Usuario> adversarios;
-    private Usuario user;
+    private VUsuario user;
 
-    public Client2(SalaActividad activity , String addr, int port, TextView textResponse, Usuario user,ArrayList<Usuario> adversarios) {
+    public Client2(SalaActividad activity , String addr, int port, TextView textResponse, VUsuario user,ArrayList<Usuario> adversarios) {
         dstAddress = addr;
         dstPort = port;
         this.textResponse = textResponse;
@@ -42,7 +43,7 @@ public class Client2 extends Thread {
             socket = new Socket(dstAddress, dstPort);
 
             String aux=activity.Recibir(socket);
-            //Log.d("gioTo", aux);
+            Log.d("gioTo", aux);
 
             HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
             hc.start();

@@ -15,9 +15,9 @@ public class HiloConexion extends Thread {
     Socket socket;
     SalaActividad activity;
     private ArrayList<Usuario> adversarios;
-    private Usuario user;
+    private VUsuario user;
 
-    public HiloConexion(Socket socket, SalaActividad activity,Usuario user,ArrayList<Usuario> adversarios){
+    public HiloConexion(Socket socket, SalaActividad activity,VUsuario user,ArrayList<Usuario> adversarios){
         this.socket=socket;
         this.activity=activity;
         this.user=user;
@@ -31,9 +31,9 @@ public class HiloConexion extends Thread {
             String respuesta="";
             estado=user.getEstado();
             try {
-                activity.Mandar(socket, "Estado Servidor :"+estado);
+                activity.Mandar(socket, "Estado del Otro :"+estado);
                 respuesta= activity.Recibir(socket);
-                //Log.d("gioTo", respuesta);
+                Log.d("gioTo", respuesta);
             } catch (IOException e) {
                 e.printStackTrace();
             }

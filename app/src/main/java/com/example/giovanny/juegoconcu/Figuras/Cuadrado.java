@@ -10,6 +10,7 @@ import com.example.giovanny.juegoconcu.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -19,7 +20,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by giovanny on 20/04/16.
  */
-public class Cuadrado {
+public class Cuadrado implements Serializable {
     private FloatBuffer vertexBuffer;  // Buffer for vertex-array
     private FloatBuffer texBuffer;    // Buffer for texture-coords-array (NEW)
 

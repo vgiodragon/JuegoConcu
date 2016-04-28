@@ -112,7 +112,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
         VerificoX();
         VerificoY();
-
     }
 
     public void VerificoX(){
@@ -154,6 +153,5 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         user.loadTexture(gl, ctx);    // Load image into Texture (NEW)
         versus.loadTexture(gl,ctx);
         // Setup Texture, each time the surface is created (NEW)
-
     }
 }

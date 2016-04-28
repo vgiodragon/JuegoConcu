@@ -1,27 +1,32 @@
 package com.example.giovanny.juegoconcu.Figuras;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.example.giovanny.juegoconcu.VUsuario;
+
+import java.io.Serializable;
 
 import javax.microedition.khronos.opengles.GL10;
 
 /**
  * Created by giovanny on 21/04/16.
  */
-public class Usuario {
+public class Usuario implements Serializable {
 
-    private Cuadrado bb1;
-    private Cuadrado bb12;
-    private Cuadrado logo;
-    private Cuadrado logo2;
+    Cuadrado bb1;
+    Cuadrado bb12;
+    Cuadrado logo;
+    Cuadrado logo2;
     float speedCube = -9f;
 
+    int bb,Sbb;
+    int log1,log2;
     boolean activado;
     float angleCube = 0;
 
-    private float xo,yo;
-    private float xi,yi;
+    float xo,yo;
+    float xi,yi;
+    VUsuario vu;
 
     public float getYi() {
         return yi;
@@ -33,21 +38,46 @@ public class Usuario {
 
     int vida;
 
+    public Usuario(VUsuario vu){
+        this.vu= vu;
+        this.bb=vu.getBb();
+        this.Sbb=vu.getSbb();
+        this.xi=this.xo=vu.getXo();
+        this.yi=this.yo=vu.getYo();
+        this.vida=vu.getVida();
+        this.log1=vu.getLog1();
+        this.log2=vu.getLog2();
+    }
+
     public Usuario(int bb,int Sbb, int log1, int log2,float xo,float yo,int vida){
-        bb1 = new Cuadrado(bb,false);
-        bb12 = new Cuadrado(Sbb,false);
-        logo = new Cuadrado(log1,false);
-        logo2 = new Cuadrado(log2,false);
+        this.bb=bb;
+        this.Sbb=Sbb;
         this.xi=this.xo=xo;
         this.yi=this.yo=yo;
         this.vida=vida;
+        this.log1=log1;
+        this.log2=log2;
+
     }
 
     public Usuario(int bb,int Sbb, float xo,float yo){
-        bb1 = new Cuadrado(bb,false);
-        bb12 = new Cuadrado(Sbb,false);
-        this.xo=xo;
-        this.yo=yo;
+        this.bb=bb;
+        this.Sbb=Sbb;
+        bb1 = new Cuadrado(this.bb,false);
+        bb12 = new Cuadrado(this.Sbb,false);
+        this.xi=this.xo=xo;
+        this.yi=this.yo=yo;
+    }
+
+    public void InicioC(){
+        bb1 = new Cuadrado(this.bb,false);
+        bb12 = new Cuadrado(this.Sbb,false);
+    }
+
+    public void InicioLyC(){
+        logo = new Cuadrado(this.log1,false);
+        logo2 = new Cuadrado(this.log2,false);
+        InicioC();
     }
 
     public void draw(GL10 gl,float bbx,float bby){
@@ -66,7 +96,6 @@ public class Usuario {
         gl.glPushMatrix();
             gl.glScalef(0.4f, 0.4f, 0.4f);
             gl.glTranslatef(xi, yi, -14.0f);
-            //Log.d("choco", "xo: " + (xo + bbx)+"_yo: "+(yo + bby));
             gl.glRotatef(angleCube, 0f, 0f, 1f); // Rotate
                 if(activado)
                     bb12.draw(gl);                       // Draw quad ( NEW )
@@ -88,6 +117,8 @@ public class Usuario {
 
         xi=xo + bbx;
         yi=yo + bby;
+        vu.setXi(xi);
+        vu.setYi(yi);
 
         gl.glPushMatrix();
         gl.glScalef(0.4f, 0.4f, 0.4f);
