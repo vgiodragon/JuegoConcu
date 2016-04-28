@@ -1,6 +1,7 @@
 package com.example.giovanny.juegoconcu.Sockets.Client;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.SalaActividad;
@@ -41,7 +42,10 @@ public class Client extends AsyncTask<Void, Void, Void> {
             socket = new Socket(dstAddress, dstPort);
             //RECIBO MENSAJE
             //response=activity.Recibir(socket);
-            activity.Mandar(socket,"desde el CLIENTE!!!");
+            Log.d("HILO", "mando desde el cliente");
+            activity.Mandar(socket, "desde el CLIENTE!!!");
+            Log.d("HILO", "Ahora voy a recibir lo del servidor");
+            activity.Recibir(socket);
 
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block

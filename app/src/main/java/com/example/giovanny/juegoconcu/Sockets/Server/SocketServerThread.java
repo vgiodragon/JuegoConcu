@@ -51,6 +51,8 @@ public class SocketServerThread extends Thread {
                 Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
 
                 respuesta=activity.Recibir(socket);
+                Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
+                activity.Mandar(socket,"ojala salga");
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
