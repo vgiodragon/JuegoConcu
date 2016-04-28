@@ -1,4 +1,4 @@
-package com.example.giovanny.juegoconcu;
+package com.example.giovanny.juegoconcu.Juego;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
@@ -7,6 +7,7 @@ import android.opengl.GLU;
 import com.example.giovanny.juegoconcu.Elementos.Pantalla;
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.Figuras.Versus;
+import com.example.giovanny.juegoconcu.R;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

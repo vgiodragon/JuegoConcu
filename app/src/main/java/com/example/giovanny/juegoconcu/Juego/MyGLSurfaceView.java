@@ -1,8 +1,7 @@
-package com.example.giovanny.juegoconcu;
+package com.example.giovanny.juegoconcu.Juego;
 
 import android.content.Context;
 import android.opengl.GLSurfaceView;
-import android.util.Log;
 import android.view.MotionEvent;
 
 /**

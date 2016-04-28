@@ -1,17 +1,19 @@
-package com.example.giovanny.juegoconcu;
+package com.example.giovanny.juegoconcu.Juego;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.giovanny.juegoconcu.R;
+
+public class JuegoActividad extends AppCompatActivity {
 
     MyGLSurfaceView mGLView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_juego);
         // Create a GLSurfaceView instance and set it
         // as the ContentView for this Activity
         DisplayMetrics displaymetrics = new DisplayMetrics();
