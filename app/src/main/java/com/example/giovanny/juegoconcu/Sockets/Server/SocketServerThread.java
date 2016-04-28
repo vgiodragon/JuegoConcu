@@ -47,38 +47,19 @@ public class SocketServerThread extends Thread {
                     }
                 });
 
-                OutputStream outputStream;
 
-                outputStream = socket.getOutputStream();
-                PrintStream printStream = new PrintStream(outputStream);
-                printStream.print("Hola desde el servidor");
-                printStream.close();
+                activity.Mandar(socket,"Hi form the Server");
 
                 Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
 
-               ///Voy a esperar un mensaje del cliente
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-                        1024);
-                byte[] buffer = new byte[1024];
-
-                int bytesRead;
-                InputStream inputStream = socket.getInputStream();
-
-         /*
-          * notice: inputStream.read() will block if no data return
-          */
-                while ((bytesRead = inputStream.read(buffer)) != -1) {///ESPERO MENSAJE!!
-                    byteArrayOutputStream.write(buffer, 0, bytesRead);
-                    respuesta += byteArrayOutputStream.toString("UTF-8");
-                }
-                Log.d("HILO",respuesta);
-
+                respuesta=activity.Recibir(socket);
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
+
 
     public void onDestroy() {
         if (serverSocket != null) {

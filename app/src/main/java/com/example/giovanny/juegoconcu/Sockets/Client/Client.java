@@ -40,29 +40,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
         try {
             socket = new Socket(dstAddress, dstPort);
             //RECIBO MENSAJE
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-                    1024);
-            byte[] buffer = new byte[1024];
-
-            int bytesRead;
-            InputStream inputStream = socket.getInputStream();
-
-
-          //notice: inputStream.read() will block if no data return
-
-            while ((bytesRead = inputStream.read(buffer)) != -1) {///ESPERO MENSAJE!!
-                byteArrayOutputStream.write(buffer, 0, bytesRead);
-                response += byteArrayOutputStream.toString("UTF-8");
-            }
-
-
-            OutputStream outputStream;
-
-            outputStream = socket.getOutputStream();
-            PrintStream printStream = new PrintStream(outputStream);
-            printStream.print("Mensaje del cliente :3");
-            printStream.close();
-
+            activity.Recibir(socket);
 
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
