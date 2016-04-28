@@ -48,14 +48,14 @@ public class SalaActividad extends AppCompatActivity {
             setHost(ServidorIP);
 
             if(CurrentIP.equals(ServidorIP)){//es un servidor
-                new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
+                user=new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
                 adversarios = new ArrayList<>();
                 adversarios.add(new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f));
                 Thread socketServerThread = new Thread(new SocketServerThread(this,user,adversarios));
                 socketServerThread.start();
             }
             else{//es un cliente
-                new Usuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,50);
+                user=new Usuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,50);
                 adversarios = new ArrayList<>();
                 adversarios.add(new Usuario(R.drawable.bb1,R.drawable.bb12,-4f,0f));
                 Client2 myClient = new Client2(this, ServidorIP,socketServerPORT,tGuestIP,user,adversarios);
