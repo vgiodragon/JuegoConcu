@@ -30,6 +30,8 @@ public class SalaActividad extends AppCompatActivity {
             ServidorIP = extras.getString("ServidorIP");
             if(CurrentIP.equals(ServidorIP)){//es un servidor
                 setHost(ServidorIP);
+                Thread socketServerThread = new Thread(new SocketServerThread(this));
+                socketServerThread.start();
             }
             else{//es un cliente
                 Client myClient = new Client(ServidorIP,socketServerPORT,tGuestIP);
@@ -38,9 +40,6 @@ public class SalaActividad extends AppCompatActivity {
 
             }
         }
-
-        Thread socketServerThread = new Thread(new SocketServerThread(this));
-        socketServerThread.start();
     }
 
     public void addMessage(String message) {
