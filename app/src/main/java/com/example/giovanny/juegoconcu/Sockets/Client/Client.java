@@ -9,6 +9,8 @@ import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerReplyThread;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -54,9 +56,12 @@ public class Client extends AsyncTask<Void, Void, Void> {
             }
 
 
-            SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
-                    new SocketServerReplyThread(activity, socket, "Te estoy mandando mi estado desde el cliente");
-            socketServerReplyThread.run();
+            OutputStream outputStream;
+
+            outputStream = socket.getOutputStream();
+            PrintStream printStream = new PrintStream(outputStream);
+            printStream.print("Mensaje del cliente :3");
+            printStream.close();
 
 
         } catch (UnknownHostException e) {
