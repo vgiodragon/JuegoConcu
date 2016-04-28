@@ -1,5 +1,7 @@
 package com.example.giovanny.juegoconcu.Juego;
 
+import android.content.Context;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -24,13 +26,14 @@ public class JuegoActividad extends AppCompatActivity {
 
     static final int socketServerPORT = 8082;
     String ServidorIP;
-
+    Vibrator v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
         boolean isServer;
         String id="";
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
             isServer = false;
@@ -41,14 +44,14 @@ public class JuegoActividad extends AppCompatActivity {
         }
         Log.d("GIOTOVIR","mi id:"+id);
         if(isServer){
-            user=new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,80,id);
+            user=new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,80,id,v);
             adversarios = new ArrayList<>();
             adversarios.add(new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f,80));
             Thread socketServerThread = new Thread(new SocketServerJuego(this,user,adversarios));
             socketServerThread.start();
         }
         else{
-            user=new Usuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,80,id);
+            user=new Usuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,80,id,v);
             adversarios = new ArrayList<>();
             adversarios.add(new Usuario(R.drawable.bb1,R.drawable.bb12,-4f,0f,80));
             ClienteJuego myClient = new ClienteJuego(this, ServidorIP,socketServerPORT,user,adversarios);
@@ -101,7 +104,6 @@ public class JuegoActividad extends AppCompatActivity {
         String respuesta="";
 
         try {
-            //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
             DataInputStream dIn = new DataInputStream(socket.getInputStream());
             respuesta=dIn.readUTF();
 

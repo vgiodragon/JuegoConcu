@@ -69,9 +69,8 @@ public class Pantalla {
         gl.glPopMatrix();
 
         if(!ganador.equals("nadie")) {
-            Log.d("GIOTOVIR","Hay ganador: "+ganador);
             gl.glPushMatrix();
-            gl.glTranslatef(0f, 0.0f, -7.0f);
+            gl.glTranslatef(0f, 0.0f, -5.0f);
             gl.glScalef(0.5f, 0.5f, 1f);
             if(ganador.equals("Player1"))
                 win1.draw(gl);

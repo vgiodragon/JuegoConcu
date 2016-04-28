@@ -107,7 +107,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         pantalla.Draw( gl, Mx, My, user.getVida(),user.getGanador());
         user.draw(gl, bbx, bby);
         versus.draw(gl);
-        // Update the rotational angle after each refresh.
 
         VerificoX();
         VerificoY();

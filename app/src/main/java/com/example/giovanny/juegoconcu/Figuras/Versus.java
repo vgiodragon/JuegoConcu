@@ -48,7 +48,7 @@ public class Versus {
             vidaAT+=element.getMurio();
             element.draw2(gl);
         }
-        if(vidaAT==0)
+        if(vidaAT==0 && user.getGanador().equals("nadie"))
             user.setGanador(user.getIdUsuario());
         quitaVida();
     }
@@ -56,23 +56,38 @@ public class Versus {
 
     public void quitaVida(){
         int quito=0;
+        int chocaron=0;
         for(int i=0;i<cantFuego;i++){
             quito+=seChocaron(Fire.getX(i),Fire.getY(i));
         }
-
         for(Usuario element: adversarios){
-            quito+=seChocaron(element.getXi(),element.getYi());
+            chocaron=0;
+            //quito+=seChocaron(element.getXi(),element.getYi());
+            chocaron=seChocaron(element.getXi(), element.getYi());
+            if(chocaron!=0){
+                //rebota(element);
+            }
+            quito+=chocaron;
         }
         user.resVida(quito);
+    }
+
+    public void rebota(Usuario element){
+        float xv=element.getXi()-user.getXi()/3;
+        float yv=element.getYi()-user.getYi()/3;
+
+        element.xi += xv;
+        element.yi += yv;
+        user.xi    -= xv;
+        user.yi    -= yv;
+
     }
 
     public int seChocaron(float x,float y){
         float dist = (float) Math.hypot(user.getXi()-x,user.getYi()-y);
         if(dist<1.78f){
-            //Log.d("Choco", "choco!!");
             return 1;
         }
-
         return 0;
     }
 }

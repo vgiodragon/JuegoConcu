@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
@@ -23,6 +24,7 @@ public class SalaActividad extends AppCompatActivity {
     String ServidorIP="";
     String message = "";
     String idU;
+    ImageView bbey;
 
     boolean isServer;
     static final int socketServerPORT = 8081;
@@ -36,7 +38,7 @@ public class SalaActividad extends AppCompatActivity {
         tHostIP = (TextView)findViewById(R.id.tHost);
         tGuestIP = (TextView)findViewById(R.id.tGuestIPs);
         isServer =false;
-
+        bbey=(ImageView)findViewById(R.id.bbIma);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             CurrentIP = extras.getString("CurrentIP");
@@ -47,8 +49,10 @@ public class SalaActividad extends AppCompatActivity {
                 Thread socketServerThread = new Thread(new SocketServerThread(this));
                 socketServerThread.start();
                 isServer=true;
+                bbey.setImageResource(R.drawable.bb1);
             }
             else{//es un cliente
+                bbey.setImageResource(R.drawable.bb3);
                 Client2 myClient = new Client2(this, ServidorIP,socketServerPORT,tGuestIP);
                 myClient.start();
             }

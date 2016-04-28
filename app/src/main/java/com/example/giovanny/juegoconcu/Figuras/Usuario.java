@@ -1,6 +1,7 @@
 package com.example.giovanny.juegoconcu.Figuras;
 
 import android.content.Context;
+import android.os.Vibrator;
 import android.util.Log;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -20,17 +21,13 @@ public class Usuario {
         return idUsuario;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
     int murio=1;
 
-    public String getGanador() {
+    public synchronized String getGanador() {
         return ganador;
     }
 
-    public void setGanador(String ganador) {
+    public synchronized void setGanador(String ganador) {
         this.ganador = ganador;
     }
 
@@ -44,13 +41,22 @@ public class Usuario {
     float angleCube = 0;
 
     float xo,yo;
+
+    public synchronized void setXi(float xi) {
+        this.xi = xi;
+    }
+
+    public synchronized void setYi(float yi) {
+        this.yi = yi;
+    }
+
     float xi,yi;
 
-    public float getYi() {
+    public synchronized float getYi() {
         return yi;
     }
 
-    public float getXi() {
+    public synchronized float getXi() {
         return xi;
     }
 
@@ -60,7 +66,9 @@ public class Usuario {
         return murio;
     }
 
-    public Usuario(int bb,int Sbb, int log1, int log2,float xo,float yo,int vida,String idUsuario){
+    Vibrator v;
+
+    public Usuario(int bb,int Sbb, int log1, int log2,float xo,float yo,int vida,String idUsuario,Vibrator v){
         this.bb=bb;
         this.Sbb=Sbb;
         this.xi=this.xo=xo;
@@ -70,6 +78,7 @@ public class Usuario {
         this.log2=log2;
         this.idUsuario=idUsuario;
         InicioLyC();
+        this.v=v;
     }
 
     public Usuario(int bb,int Sbb, float xo,float yo,int vida){
@@ -175,6 +184,9 @@ public class Usuario {
     }
 
     public String getEstado(){
+        if(!ganador.equals("nadie")){
+            Log.d("GIOTOVIR", "Mando mi ganador: " + ganador);
+        }
         return xi+"__"+yi+"__"+activado+"__"+vida+"__"+ganador+"__";
     }
 
@@ -184,8 +196,11 @@ public class Usuario {
         yi=Float.parseFloat(parte[1]);
         activado=Boolean.parseBoolean(parte[2]);
         vida=Integer.parseInt(parte[3]);
-        if(!parte[4].equals("nadie"))
-            ganador=parte[4];
+        if(!parte[4].equals("nadie")){
+            setGanador(parte[4]);
+            Log.d("GIOTOVIR", "Hay ganador: " + getGanador());
+        }
+
     }
 
     public boolean getActivado() {
@@ -201,9 +216,10 @@ public class Usuario {
     }
 
     public synchronized void resVida(int val) {
-        if(vida >0)
-            this.vida -=val;
-
+        if(vida >0) {
+            v.vibrate(100*val);
+            this.vida -= val;
+        }
     }
 
 }
