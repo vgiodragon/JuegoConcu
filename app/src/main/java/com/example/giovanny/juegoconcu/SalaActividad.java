@@ -99,7 +99,6 @@ public class SalaActividad extends AppCompatActivity {
         InputStream inputStream = null;
         try {
             inputStream = socket.getInputStream();
-
              /*
               * notice: inputStream.read() will block if no data return
               */

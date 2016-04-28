@@ -33,8 +33,6 @@ public class SocketServerThread extends Thread {
             serverSocket = new ServerSocket(socketServerPORT);
 
             while (true) {
-                // block the call until connection is created and return
-                // Socket object
                 Socket socket = serverSocket.accept();
                 count++;
                 activity.addMessage("Player" + count + " _ "///OBTENGO INFO DEL CONECTADO
@@ -48,7 +46,7 @@ public class SocketServerThread extends Thread {
                 });
 
 
-                activity.Mandar(socket,"Hi form the Server");
+                //activity.Mandar(socket,"Hi form the Server");
 
                 Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
 
