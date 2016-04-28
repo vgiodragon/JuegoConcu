@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Player 1 _ 192.168.20.0"
-        android:id="@+id/tHostIP"
+        android:id="@+id/tHost"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/tH"
         android:layout_alignParentEnd="false"

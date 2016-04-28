@@ -4,18 +4,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
+
 public class SalaActividad extends AppCompatActivity {
 
     TextView tGuestIP;
     TextView tHostIP;
-    String CurrentIP;
-    String ServidorIP;
+    String CurrentIP="";
+    String ServidorIP="";
     String message = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala_actividad);
+
+        tHostIP = (TextView)findViewById(R.id.tHost);
+        tGuestIP = (TextView)findViewById(R.id.tGuestIPs);
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             CurrentIP = extras.getString("CurrentIP");
@@ -25,11 +31,13 @@ public class SalaActividad extends AppCompatActivity {
             }
             else{
                 setHost(ServidorIP);
+                setHost(CurrentIP);
 
             }
         }
-        tHostIP = (TextView)findViewById(R.id.tHostIP);
-        tGuestIP = (TextView)findViewById(R.id.tGuestIPs);
+
+        Thread socketServerThread = new Thread(new SocketServerThread(this));
+        socketServerThread.start();
     }
 
     public void addMessage(String message) {
@@ -41,7 +49,7 @@ public class SalaActividad extends AppCompatActivity {
     }
 
     public void setGuestIP(){
-        tHostIP.setText(message);
+        tGuestIP.setText(message);
     }
 
 }

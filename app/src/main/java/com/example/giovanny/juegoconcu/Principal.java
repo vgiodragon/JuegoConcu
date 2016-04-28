@@ -34,7 +34,7 @@ public class Principal extends AppCompatActivity {
     }
 
     public void LaunchSala(View view) {
-        Intent intent = new Intent(this, JuegoActividad.class);
+        Intent intent = new Intent(this, SalaActividad.class);
         intent.putExtra("ServidorIP", CurrentIP);
         intent.putExtra("CurrentIP", CurrentIP);
         startActivity(intent);
