@@ -45,6 +45,10 @@ public class SalaActividad extends AppCompatActivity {
         this.message += message;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     private void setHost(String ip){
         tHostIP.setText("Player 1 _ "+ip);
     }

@@ -15,17 +15,18 @@ public class SocketServerReplyThread extends Thread {
     private Socket hostThreadSocket;
     int cnt;
     SalaActividad activity;
+    String msgReply;
 
-    SocketServerReplyThread(SalaActividad activity,Socket socket, int c) {
+    SocketServerReplyThread(SalaActividad activity,Socket socket, int c, String conectados) {
         hostThreadSocket = socket;
         cnt = c;
         this.activity=activity;
+        msgReply = conectados;
     }
 
     @Override
     public void run() {
         OutputStream outputStream;
-        String msgReply = "Hello from Server, you are #" + cnt;
 
         try {
             outputStream = hostThreadSocket.getOutputStream();
@@ -33,7 +34,7 @@ public class SocketServerReplyThread extends Thread {
             printStream.print(msgReply);
             printStream.close();
 
-            activity.addMessage( "replayed: " + msgReply + "\n");
+            //activity.addMessage( "replayed: " + msgReply + "\n");
 
             activity.runOnUiThread(new Runnable() {
 

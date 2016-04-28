@@ -13,7 +13,7 @@ import java.net.Socket;
  */
 public class SocketServerThread extends Thread {
     ServerSocket serverSocket;
-    int count = 0;
+    int count = 1;
     static final int socketServerPORT = 8081;
     SalaActividad activity;
 
@@ -30,13 +30,10 @@ public class SocketServerThread extends Thread {
             while (true) {
                 // block the call until connection is created and return
                 // Socket object
-                Log.d("Hilo", "Espero alguien se conecte");
                 Socket socket = serverSocket.accept();
-                Log.d("Hilo", "Alguiense se conecto!");
                 count++;
-                activity.addMessage("#" + count + " from "
-                        + socket.getInetAddress() + ":"
-                        + socket.getPort() + "\n");
+                activity.addMessage( "Player" + count + " _ "
+                        + socket.getInetAddress() + ":"+ socket.getPort() + "\n");
 
                 activity.runOnUiThread(new Runnable() {
                     @Override
@@ -46,7 +43,7 @@ public class SocketServerThread extends Thread {
                 });
 
                 SocketServerReplyThread socketServerReplyThread =
-                        new SocketServerReplyThread(activity,socket, count);
+                        new SocketServerReplyThread(activity,socket, count,activity.getMessage());
                 socketServerReplyThread.run();
 
             }
