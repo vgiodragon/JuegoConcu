@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
@@ -21,6 +22,7 @@ import java.nio.ByteOrder;
 public class Principal extends AppCompatActivity {
 
     TextView tip1;
+    EditText tserver;
     String CurrentIP;
 
     @Override
@@ -28,6 +30,7 @@ public class Principal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
         tip1 = (TextView) findViewById(R.id.tip1);
+        tserver = (EditText) findViewById(R.id.etServerIP);
         CurrentIP =wifiIpAddress(this);
         tip1.setText(CurrentIP);
 
@@ -36,6 +39,14 @@ public class Principal extends AppCompatActivity {
     public void LaunchSala(View view) {
         Intent intent = new Intent(this, SalaActividad.class);
         intent.putExtra("ServidorIP", CurrentIP);
+        intent.putExtra("CurrentIP", CurrentIP);
+        startActivity(intent);
+    }
+
+    public void Conectarse(View view) {
+        String aux = String.valueOf(tserver.getText());
+        Intent intent = new Intent(this, SalaActividad.class);
+        intent.putExtra("ServidorIP", tserver.getText());
         intent.putExtra("CurrentIP", CurrentIP);
         startActivity(intent);
     }

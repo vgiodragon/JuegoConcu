@@ -32,13 +32,13 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Seleccionar IP:"
         android:id="@+id/tSelectIP"
-        android:layout_alignTop="@+id/editText"
-        android:layout_toStartOf="@+id/editText" />
+        android:layout_alignTop="@+id/etServerIP"
+        android:layout_toStartOf="@+id/etServerIP" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/etServerIP"
         android:layout_above="@+id/button"
         android:layout_alignStart="@+id/button"
         android:hint="192.168.0.100" />

@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.giovanny.juegoconcu.Sockets.Client.Client;
 import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
 
 public class SalaActividad extends AppCompatActivity {
@@ -13,6 +14,7 @@ public class SalaActividad extends AppCompatActivity {
     String CurrentIP="";
     String ServidorIP="";
     String message = "";
+    static final int socketServerPORT = 8081;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,10 +28,11 @@ public class SalaActividad extends AppCompatActivity {
         if (extras != null) {
             CurrentIP = extras.getString("CurrentIP");
             ServidorIP = extras.getString("ServidorIP");
-            if(CurrentIP.equals(ServidorIP)){
+            if(CurrentIP.equals(ServidorIP)){//es un servidor
                 setHost(ServidorIP);
             }
-            else{
+            else{//es un cliente
+                Client myClient = new Client(ServidorIP,socketServerPORT,tGuestIP);
                 setHost(ServidorIP);
                 setHost(CurrentIP);
 
