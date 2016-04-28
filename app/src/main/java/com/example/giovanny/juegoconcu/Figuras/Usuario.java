@@ -20,8 +20,8 @@ public class Usuario {
     boolean activado;
     float angleCube = 0;
 
-    float xo,yo;
-    float xi,yi;
+    private float xo,yo;
+    private float xi,yi;
 
     public float getYi() {
         return yi;
@@ -133,6 +133,13 @@ public class Usuario {
         bb12.loadTexture(gl, ctx);    // Load image into Texture (NEW)
     }
 
+    public String getEstado(){
+        return xi+"&&"+yi+"&&"+activado;
+    }
+
+    public void setEstado(){
+
+    }
 
     public boolean getActivado() {
         return activado;

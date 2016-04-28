@@ -2,6 +2,7 @@ package com.example.giovanny.juegoconcu.Sockets.Server;
 
 import android.util.Log;
 
+import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.SalaActividad;
 
 import java.io.ByteArrayOutputStream;
@@ -11,6 +12,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * Created by giovanny on 27/04/16.
@@ -21,9 +23,13 @@ public class SocketServerThread extends Thread {
     static final int socketServerPORT = 8081;
     SalaActividad activity;
     String respuesta="";
+    private ArrayList<Usuario> adversarios;
+    private Usuario user;
 
-    public SocketServerThread(SalaActividad activity){
+    public SocketServerThread(SalaActividad activity,Usuario user,ArrayList<Usuario> adversarios){
         this.activity=activity;
+        this.user=user;
+        this.adversarios=adversarios;
     }
 
     @Override
@@ -47,11 +53,12 @@ public class SocketServerThread extends Thread {
 
 
                 //activity.Mandar(socket,"Hi form the Server");
-                activity.Mandar(socket,"ojala salga Servidor");
+                String estado="";
+                estado=user.getEstado();
+                activity.Mandar(socket, "Estado Servidor :"+estado);
                 //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
-
                 respuesta= activity.Recibir(socket);
-
+                Log.d("gioTo", respuesta);
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block

@@ -9,6 +9,8 @@ import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.Figuras.Versus;
 import com.example.giovanny.juegoconcu.R;
 
+import java.util.ArrayList;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -18,7 +20,9 @@ import javax.microedition.khronos.opengles.GL10;
 public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     Versus versus;
-    Usuario user;
+    private ArrayList<Usuario> adversarios;
+
+    private Usuario user;
 
     private Context ctx;
 

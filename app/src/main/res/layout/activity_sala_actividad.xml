@@ -63,4 +63,12 @@
         android:layout_alignParentEnd="true"
         android:onClick="LaunchGame" />
 
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/bIJuego"
+        android:src="@drawable/bb1" />
+
 </RelativeLayout>

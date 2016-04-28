@@ -50,7 +50,6 @@ public class Versus {
     }
 
 
-
     public void quitaVida(){
         int quito=0;
         for(int i=0;i<cantFuego;i++){

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.SalaActividad;
 import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerReplyThread;
 
@@ -14,6 +15,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 /**
  * Created by giovanny on 27/04/16.
@@ -25,12 +27,16 @@ public class Client extends AsyncTask<Void, Void, Void> {
     String response = "";
     TextView textResponse;
     SalaActividad activity;
+    private ArrayList<Usuario> adversarios;
+    private Usuario user;
 
-    public Client(SalaActividad activity , String addr, int port, TextView textResponse) {
+    public Client(SalaActividad activity , String addr, int port, TextView textResponse, Usuario user,ArrayList<Usuario> adversarios) {
         dstAddress = addr;
         dstPort = port;
         this.textResponse = textResponse;
         this.activity=activity;
+        this.user=user;
+        this.adversarios=adversarios;
     }
 
     @Override
