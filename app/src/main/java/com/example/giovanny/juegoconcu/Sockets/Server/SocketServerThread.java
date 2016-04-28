@@ -3,6 +3,7 @@ package com.example.giovanny.juegoconcu.Sockets.Server;
 import android.util.Log;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
+import com.example.giovanny.juegoconcu.HiloConexion;
 import com.example.giovanny.juegoconcu.SalaActividad;
 
 import java.io.ByteArrayOutputStream;
@@ -59,6 +60,8 @@ public class SocketServerThread extends Thread {
                 //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
                 respuesta= activity.Recibir(socket);
                 Log.d("gioTo", respuesta);
+                HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
+                hc.start();
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block

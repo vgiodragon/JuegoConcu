@@ -4,6 +4,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
+import com.example.giovanny.juegoconcu.HiloConexion;
 import com.example.giovanny.juegoconcu.SalaActividad;
 
 import java.io.IOException;
@@ -43,8 +44,8 @@ public class Client2 extends Thread {
             String aux=activity.Recibir(socket);
             Log.d("gioTo", aux);
 
-            aux=user.getEstado();
-            activity.Mandar(socket, "Estado Cliente"+aux);
+            HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
+            hc.start();
 
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
