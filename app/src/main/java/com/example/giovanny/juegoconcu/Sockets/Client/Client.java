@@ -53,6 +53,13 @@ public class Client extends AsyncTask<Void, Void, Void> {
                 response += byteArrayOutputStream.toString("UTF-8");
             }
 
+
+
+            SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
+                    new SocketServerReplyThread(activity, socket, "Te estoy mandando mi estado desde el cliente");
+            socketServerReplyThread.run();
+
+
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -71,10 +78,6 @@ public class Client extends AsyncTask<Void, Void, Void> {
                 }
             }
         }
-
-        SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
-                new SocketServerReplyThread(activity, socket, "Te estoy mandando mi estado desde el cliente");
-        socketServerReplyThread.run();
 
         return null;
     }
