@@ -1,9 +1,12 @@
 package com.example.giovanny.juegoconcu;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
+import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
 import com.example.giovanny.juegoconcu.Sockets.Client.Client;
 import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
 
@@ -47,6 +50,11 @@ public class SalaActividad extends AppCompatActivity {
 
     public String getMessage() {
         return message;
+    }
+
+    public void LaunchGame(View view) {
+        Intent intent = new Intent(this, JuegoActividad.class);
+        startActivity(intent);
     }
 
     private void setHost(String ip){

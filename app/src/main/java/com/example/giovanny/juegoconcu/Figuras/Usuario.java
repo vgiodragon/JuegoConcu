@@ -48,7 +48,6 @@ public class Usuario {
         bb12 = new Cuadrado(Sbb,false);
         this.xo=xo;
         this.yo=yo;
-        this.vida=vida;
     }
 
     public void draw(GL10 gl,float bbx,float bby){

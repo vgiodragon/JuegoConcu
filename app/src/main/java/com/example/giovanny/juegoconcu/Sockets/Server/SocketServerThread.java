@@ -43,7 +43,7 @@ public class SocketServerThread extends Thread {
                 });
 
                 SocketServerReplyThread socketServerReplyThread =
-                        new SocketServerReplyThread(activity,socket, count,activity.getMessage());
+                        new SocketServerReplyThread(activity, socket, count,activity.getMessage());
                 socketServerReplyThread.run();
 
             }
