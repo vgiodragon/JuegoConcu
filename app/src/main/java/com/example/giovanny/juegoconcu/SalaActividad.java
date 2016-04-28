@@ -77,11 +77,10 @@ public class SalaActividad extends AppCompatActivity {
 
 
     public void Mandar(Socket socket,String mnsj) throws IOException {
-        OutputStream outputStream;
         DataOutputStream dOut;
         try {
             dOut = new DataOutputStream(socket.getOutputStream());
-            dOut.writeUTF("This is the first type of message sueño.");
+            dOut.writeUTF(mnsj);
             dOut.flush(); // Send off the data
 
             dOut.close();
