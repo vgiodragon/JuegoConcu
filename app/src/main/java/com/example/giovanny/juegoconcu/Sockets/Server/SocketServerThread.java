@@ -49,6 +49,7 @@ public class SocketServerThread extends Thread {
                         new SocketServerReplyThread(activity, socket,activity.getMessage());
                 socketServerReplyThread.run();
 
+
                ///Voy a esperar un mensaje del cliente
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
                         1024);

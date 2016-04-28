@@ -30,7 +30,7 @@ public class SocketServerReplyThread extends Thread {
             outputStream = hostThreadSocket.getOutputStream();
             PrintStream printStream = new PrintStream(outputStream);
             printStream.print(msgReply);
-            printStream.close();
+            //printStream.close();
 
             //activity.addMessage( "replayed: " + msgReply + "\n");
 
