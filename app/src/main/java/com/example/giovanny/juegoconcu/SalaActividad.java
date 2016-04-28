@@ -12,6 +12,8 @@ import com.example.giovanny.juegoconcu.Sockets.Client.Client;
 import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -76,12 +78,13 @@ public class SalaActividad extends AppCompatActivity {
 
     public void Mandar(Socket socket,String mnsj) throws IOException {
         OutputStream outputStream;
-
+        DataOutputStream dOut;
         try {
-            outputStream = socket.getOutputStream();
-            PrintStream printStream = new PrintStream(outputStream);
-            printStream.print(mnsj);
-            printStream.close();
+            dOut = new DataOutputStream(socket.getOutputStream());
+            dOut.writeUTF("This is the first type of message sueño.");
+            dOut.flush(); // Send off the data
+
+            dOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -91,23 +94,12 @@ public class SalaActividad extends AppCompatActivity {
     public String Recibir(Socket socket){
         String respuesta="";
         ///Voy a esperar un mensaje del cliente
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
-                1024);
-        byte[] buffer = new byte[1024];
 
-        int bytesRead;
-        InputStream inputStream = null;
         try {
-            inputStream = socket.getInputStream();
-             /*
-              * notice: inputStream.read() will block if no data return
-              */
-            while ((bytesRead = inputStream.read(buffer)) != -1) {///ESPERO MENSAJE!!
-                byteArrayOutputStream.write(buffer, 0, bytesRead);
-                respuesta += byteArrayOutputStream.toString("UTF-8");
-            }
+            DataInputStream dIn = new DataInputStream(socket.getInputStream());
+            respuesta=dIn.readUTF();
 
-            Log.d("HILO", respuesta);
+            Log.d("HILO", "respuesta: "+respuesta);
 
         } catch (IOException e) {
             e.printStackTrace();

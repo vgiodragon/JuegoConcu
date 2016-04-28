@@ -45,7 +45,7 @@ public class Client extends AsyncTask<Void, Void, Void> {
             Log.d("HILO", "mando desde el cliente");
             activity.Mandar(socket, "desde el CLIENTE!!!");
             Log.d("HILO", "Ahora voy a recibir lo del servidor");
-            activity.Recibir(socket);
+            //activity.Recibir(socket);
 
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
