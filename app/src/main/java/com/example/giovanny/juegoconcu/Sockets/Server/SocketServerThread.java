@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.example.giovanny.juegoconcu.SalaActividad;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -16,6 +18,7 @@ public class SocketServerThread extends Thread {
     int count = 1;
     static final int socketServerPORT = 8081;
     SalaActividad activity;
+    String respuesta="";
 
     public SocketServerThread(SalaActividad activity){
         this.activity=activity;
@@ -32,7 +35,7 @@ public class SocketServerThread extends Thread {
                 // Socket object
                 Socket socket = serverSocket.accept();
                 count++;
-                activity.addMessage( "Player" + count + " _ "
+                activity.addMessage( "Player" + count + " _ "///OBTENGO INFO DEL CONECTADO
                         + socket.getInetAddress() + ":"+ socket.getPort() + "\n");
 
                 activity.runOnUiThread(new Runnable() {
@@ -42,9 +45,26 @@ public class SocketServerThread extends Thread {
                     }
                 });
 
-                SocketServerReplyThread socketServerReplyThread =
-                        new SocketServerReplyThread(activity, socket, count,activity.getMessage());
+                SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
+                        new SocketServerReplyThread(activity, socket,activity.getMessage());
                 socketServerReplyThread.run();
+
+               ///Voy a esperar un mensaje del cliente
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
+                        1024);
+                byte[] buffer = new byte[1024];
+
+                int bytesRead;
+                InputStream inputStream = socket.getInputStream();
+
+         /*
+          * notice: inputStream.read() will block if no data return
+          */
+                while ((bytesRead = inputStream.read(buffer)) != -1) {///ESPERO MENSAJE!!
+                    byteArrayOutputStream.write(buffer, 0, bytesRead);
+                    respuesta += byteArrayOutputStream.toString("UTF-8");
+                }
+                Log.d("HILO",respuesta);
 
             }
         } catch (IOException e) {

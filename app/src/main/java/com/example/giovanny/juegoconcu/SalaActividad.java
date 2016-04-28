@@ -37,7 +37,7 @@ public class SalaActividad extends AppCompatActivity {
                 socketServerThread.start();
             }
             else{//es un cliente
-                Client myClient = new Client(ServidorIP,socketServerPORT,tGuestIP);
+                Client myClient = new Client(this, ServidorIP,socketServerPORT,tGuestIP);
                 setHost(ServidorIP);
                 myClient.execute();
             }

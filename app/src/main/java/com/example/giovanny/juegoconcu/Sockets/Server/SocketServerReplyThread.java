@@ -13,19 +13,17 @@ import java.net.Socket;
 public class SocketServerReplyThread extends Thread {
 
     private Socket hostThreadSocket;
-    int cnt;
     SalaActividad activity;
     String msgReply;
 
-    SocketServerReplyThread(SalaActividad activity,Socket socket, int c, String conectados) {
+    public SocketServerReplyThread(SalaActividad activity, Socket socket, String conectados) {
         hostThreadSocket = socket;
-        cnt = c;
         this.activity=activity;
         msgReply = conectados;
     }
 
     @Override
-    public void run() {
+    public void run() {///MANDO MENSAJE
         OutputStream outputStream;
 
         try {
