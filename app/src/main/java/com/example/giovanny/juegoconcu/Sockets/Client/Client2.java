@@ -35,6 +35,8 @@ public class Client2 extends Thread {
             socket = new Socket(dstAddress, dstPort);
 
             String aux=activity.Recibir(socket);
+            String id[]=aux.split("__");
+            activity.setIdU(id[0]);
             activity.addMessage(aux);
             activity.runOnUiThread(new Runnable() {
                 @Override

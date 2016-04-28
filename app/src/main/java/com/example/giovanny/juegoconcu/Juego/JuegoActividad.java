@@ -3,6 +3,7 @@ package com.example.giovanny.juegoconcu.Juego;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.R;
@@ -28,28 +29,28 @@ public class JuegoActividad extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
-        // Create a GLSurfaceView instance and set it
-        //Intent intent = getIntent();
         boolean isServer;
+        String id="";
         Bundle extras = getIntent().getExtras();
         if(extras == null) {
             isServer = false;
         } else {
             isServer = extras.getBoolean("isServer");
             ServidorIP = extras.getString("ServidorIP");
+            id=extras.getString("idU");;
         }
+        Log.d("GIOTOVIR","mi id:"+id);
         if(isServer){
-            user=new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
-            //adver=new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f);
+            user=new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,80,id);
             adversarios = new ArrayList<>();
-            adversarios.add(new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f));
+            adversarios.add(new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f,80));
             Thread socketServerThread = new Thread(new SocketServerJuego(this,user,adversarios));
             socketServerThread.start();
         }
         else{
-            user=new Usuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,50);
+            user=new Usuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,80,id);
             adversarios = new ArrayList<>();
-            adversarios.add(new Usuario(R.drawable.bb1,R.drawable.bb12,-4f,0f));
+            adversarios.add(new Usuario(R.drawable.bb1,R.drawable.bb12,-4f,0f,80));
             ClienteJuego myClient = new ClienteJuego(this, ServidorIP,socketServerPORT,user,adversarios);
             myClient.start();
         }

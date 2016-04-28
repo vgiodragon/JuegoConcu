@@ -27,12 +27,12 @@ public class SocketServerThread extends Thread {
         try {
             // create ServerSocket using specified port
             serverSocket = new ServerSocket(socketServerPORT);
-
+            activity.setIdU("Player"+count);
             while (true) {
-                Log.d("gioTo", "Espero que alguien se conecte");
+                Log.d("gioTo", "Espero que alguien se conecte mi id es "+activity.getIdU());
                 Socket socket = serverSocket.accept();
                 count++;
-                activity.addMessage("Player" + count + " _ "///OBTENGO INFO DEL CONECTADO
+                activity.addMessage("Player"+count+ "__"///OBTENGO INFO DEL CONECTADO
                         + socket.getInetAddress() + ":" + socket.getPort() + "\n");
 
                 activity.runOnUiThread(new Runnable() {
@@ -43,7 +43,6 @@ public class SocketServerThread extends Thread {
                 });
 
 
-                Log.d("gioTo", activity.getMessage());
                 activity.Mandar(socket, activity.getMessage());
                 activity.runOnUiThread(new Runnable() {
                     @Override

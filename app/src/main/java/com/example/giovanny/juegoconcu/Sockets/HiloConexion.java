@@ -1,4 +1,4 @@
-package com.example.giovanny.juegoconcu;
+package com.example.giovanny.juegoconcu.Sockets;
 
 import android.util.Log;
 
@@ -42,7 +42,6 @@ public class HiloConexion extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

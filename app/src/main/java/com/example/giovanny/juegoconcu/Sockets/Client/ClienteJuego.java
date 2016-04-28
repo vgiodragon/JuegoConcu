@@ -1,12 +1,10 @@
 package com.example.giovanny.juegoconcu.Sockets.Client;
 
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
-import com.example.giovanny.juegoconcu.HiloConexion;
+import com.example.giovanny.juegoconcu.Sockets.HiloConexion;
 import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
-import com.example.giovanny.juegoconcu.SalaActividad;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -39,10 +37,9 @@ public class ClienteJuego extends Thread {
 
         try {
             socket = new Socket(dstAddress, dstPort);
-
             String aux=activity.Recibir(socket);
 
-            Log.d("gioTo", "Recibi" + aux);
+            //Log.d("gioTo", "Recibi" + aux);
 
             HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
             hc.start();

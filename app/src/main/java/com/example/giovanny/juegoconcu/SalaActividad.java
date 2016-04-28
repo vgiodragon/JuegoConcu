@@ -1,14 +1,11 @@
 package com.example.giovanny.juegoconcu;
 
 import android.content.Intent;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
 import com.example.giovanny.juegoconcu.Sockets.Client.Client2;
 import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
@@ -16,9 +13,7 @@ import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.Socket;
-import java.util.ArrayList;
 
 public class SalaActividad extends AppCompatActivity {
 
@@ -27,6 +22,8 @@ public class SalaActividad extends AppCompatActivity {
     String CurrentIP="";
     String ServidorIP="";
     String message = "";
+    String idU;
+
     boolean isServer;
     static final int socketServerPORT = 8081;
 
@@ -35,7 +32,7 @@ public class SalaActividad extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sala_actividad);
-
+        idU="";
         tHostIP = (TextView)findViewById(R.id.tHost);
         tGuestIP = (TextView)findViewById(R.id.tGuestIPs);
         isServer =false;
@@ -70,6 +67,7 @@ public class SalaActividad extends AppCompatActivity {
         Intent intent = new Intent(this, JuegoActividad.class);
         intent.putExtra("isServer",isServer);
         intent.putExtra("ServidorIP",ServidorIP);
+        intent.putExtra("idU",getIdU());
         startActivity(intent);
     }
 
@@ -93,6 +91,14 @@ public class SalaActividad extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public String getIdU() {
+        return idU;
+    }
+
+    public void setIdU(String idU) {
+        this.idU = idU;
     }
 
     public String Recibir(Socket socket){

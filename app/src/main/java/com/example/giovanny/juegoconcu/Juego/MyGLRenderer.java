@@ -28,7 +28,6 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
 
     private Pantalla pantalla;
 
-
     float Mx;
     float My;
 
@@ -105,7 +104,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // You OpenGL|ES rendering code here
         gl.glLoadIdentity();                 // Reset model-view matrix ( NEW )
         // Translate right, relative to the previous translation ( NEW )
-        pantalla.Draw( gl, Mx, My, user.getVida());
+        pantalla.Draw( gl, Mx, My, user.getVida(),user.getGanador());
         user.draw(gl, bbx, bby);
         versus.draw(gl);
         // Update the rotational angle after each refresh.

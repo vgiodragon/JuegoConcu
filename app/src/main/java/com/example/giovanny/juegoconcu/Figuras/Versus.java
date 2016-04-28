@@ -22,6 +22,7 @@ public class Versus {
     private int cantFuego;
 
 
+
     public Versus(Usuario user, ArrayList<Usuario> adversarios){
         this.user=user;
 
@@ -42,9 +43,13 @@ public class Versus {
 
     public void draw(GL10 gl) {
         Fire.draw(gl);
+        int vidaAT=0;
         for(Usuario element: adversarios){
+            vidaAT+=element.getMurio();
             element.draw2(gl);
         }
+        if(vidaAT==0)
+            user.setGanador(user.getIdUsuario());
         quitaVida();
     }
 
@@ -64,7 +69,7 @@ public class Versus {
     public int seChocaron(float x,float y){
         float dist = (float) Math.hypot(user.getXi()-x,user.getYi()-y);
         if(dist<1.78f){
-            Log.d("Choco", "choco!!");
+            //Log.d("Choco", "choco!!");
             return 1;
         }
 

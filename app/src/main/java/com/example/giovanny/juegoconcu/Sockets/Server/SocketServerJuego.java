@@ -3,7 +3,7 @@ package com.example.giovanny.juegoconcu.Sockets.Server;
 import android.util.Log;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
-import com.example.giovanny.juegoconcu.HiloConexion;
+import com.example.giovanny.juegoconcu.Sockets.HiloConexion;
 import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
 
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class SocketServerJuego extends Thread {
             serverSocket = new ServerSocket(socketServerPORT);
 
             while (true) {
-                Log.d("gioTo", "Espero que alguien se conecte a juego");
+                //Log.d("gioTo", "Espero que alguien se conecte a juego");
                 Socket socket = serverSocket.accept();
                 HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
                 hc.start();
