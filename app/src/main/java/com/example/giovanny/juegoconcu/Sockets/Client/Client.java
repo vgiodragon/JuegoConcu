@@ -40,7 +40,8 @@ public class Client extends AsyncTask<Void, Void, Void> {
         try {
             socket = new Socket(dstAddress, dstPort);
             //RECIBO MENSAJE
-            activity.Recibir(socket);
+            response=activity.Recibir(socket);
+            activity.Mandar(socket,"desde el CLIENTE!!!");
 
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
