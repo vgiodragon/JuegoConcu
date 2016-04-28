@@ -70,12 +70,12 @@ public class Client extends AsyncTask<Void, Void, Void> {
             response = "IOException: " + e.toString();
         } finally {
             if (socket != null) {
-                try {
+              /*  try {
                     socket.close();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                }
+                }*/
             }
         }
 

@@ -30,17 +30,10 @@ public class SocketServerReplyThread extends Thread {
             outputStream = hostThreadSocket.getOutputStream();
             PrintStream printStream = new PrintStream(outputStream);
             printStream.print(msgReply);
-            //printStream.close();
+            printStream.close();
 
             //activity.addMessage( "replayed: " + msgReply + "\n");
-
-            activity.runOnUiThread(new Runnable() {
-
-                @Override
-                public void run() {
-                    activity.setGuestIP();
-                }
-            });
+            
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
