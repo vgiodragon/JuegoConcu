@@ -24,7 +24,8 @@
         android:text="Conectarse a un Server"
         android:id="@+id/button"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="Conectarse" />
 
     <TextView
         android:layout_width="wrap_content"
