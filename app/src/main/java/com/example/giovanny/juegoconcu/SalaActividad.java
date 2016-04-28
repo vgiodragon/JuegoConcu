@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
 import com.example.giovanny.juegoconcu.Sockets.Client.Client;
+import com.example.giovanny.juegoconcu.Sockets.Client.Client2;
 import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
 
 import java.io.ByteArrayOutputStream;
@@ -48,8 +49,8 @@ public class SalaActividad extends AppCompatActivity {
                 socketServerThread.start();
             }
             else{//es un cliente
-                Client myClient = new Client(this, ServidorIP,socketServerPORT,tGuestIP);
-                myClient.execute();
+                Client2 myClient = new Client2(this, ServidorIP,socketServerPORT,tGuestIP);
+                myClient.start();
             }
         }
     }
@@ -83,7 +84,7 @@ public class SalaActividad extends AppCompatActivity {
             dOut.writeUTF(mnsj);
             dOut.flush(); // Send off the data
 
-            dOut.close();
+            //dOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,6 +96,7 @@ public class SalaActividad extends AppCompatActivity {
         ///Voy a esperar un mensaje del cliente
 
         try {
+            Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
             DataInputStream dIn = new DataInputStream(socket.getInputStream());
             respuesta=dIn.readUTF();
 

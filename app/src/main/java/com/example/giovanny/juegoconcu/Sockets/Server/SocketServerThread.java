@@ -48,7 +48,7 @@ public class SocketServerThread extends Thread {
 
                 //activity.Mandar(socket,"Hi form the Server");
                 activity.Mandar(socket,"ojala salga Servidor");
-                Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
+                //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
 
                 respuesta= activity.Recibir(socket);
 
