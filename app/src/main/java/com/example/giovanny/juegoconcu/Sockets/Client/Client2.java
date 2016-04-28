@@ -56,7 +56,7 @@ public class Client2 extends Thread {
             e.printStackTrace();
             response = "IOException: " + e.toString();
         } finally {
-            while(socket != null) {
+            if (socket != null) {
               /*  try {
                     socket.close();
                 } catch (IOException e) {

@@ -18,6 +18,7 @@ public class HiloConexion extends Thread {
     private Usuario user;
 
     public HiloConexion(Socket socket, SalaActividad activity,Usuario user,ArrayList<Usuario> adversarios){
+        this.socket=socket;
         this.activity=activity;
         this.user=user;
         this.adversarios=adversarios;
