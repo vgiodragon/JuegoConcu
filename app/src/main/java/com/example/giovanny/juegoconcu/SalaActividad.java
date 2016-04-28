@@ -80,7 +80,7 @@ public class SalaActividad extends AppCompatActivity {
         try {
             outputStream = socket.getOutputStream();
             PrintStream printStream = new PrintStream(outputStream);
-            printStream.print("Hola desde el servidor");
+            printStream.print(mnsj);
             printStream.close();
         } catch (IOException e) {
             e.printStackTrace();
