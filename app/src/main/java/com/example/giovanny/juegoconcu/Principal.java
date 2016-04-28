@@ -31,6 +31,7 @@ public class Principal extends AppCompatActivity {
         setContentView(R.layout.activity_principal);
         tip1 = (TextView) findViewById(R.id.tip1);
         tserver = (EditText) findViewById(R.id.etServerIP);
+        tserver.setText("192.168.20.48");
         CurrentIP =wifiIpAddress(this);
         tip1.setText(CurrentIP);
 
