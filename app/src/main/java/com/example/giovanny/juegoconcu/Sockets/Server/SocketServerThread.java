@@ -1,5 +1,7 @@
 package com.example.giovanny.juegoconcu.Sockets.Server;
 
+import android.util.Log;
+
 import com.example.giovanny.juegoconcu.SalaActividad;
 
 import java.io.IOException;
@@ -28,7 +30,9 @@ public class SocketServerThread extends Thread {
             while (true) {
                 // block the call until connection is created and return
                 // Socket object
+                Log.d("Hilo", "Espero alguien se conecte");
                 Socket socket = serverSocket.accept();
+                Log.d("Hilo", "Alguiense se conecto!");
                 count++;
                 activity.addMessage("#" + count + " from "
                         + socket.getInetAddress() + ":"

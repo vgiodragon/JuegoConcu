@@ -45,6 +45,7 @@ public class Principal extends AppCompatActivity {
 
     public void Conectarse(View view) {
         String aux = String.valueOf(tserver.getText());
+        Log.d("Hilo","aux "+aux+"_getText:"+tserver.getText());
         Intent intent = new Intent(this, SalaActividad.class);
         intent.putExtra("ServidorIP", tserver.getText());
         intent.putExtra("CurrentIP", CurrentIP);
