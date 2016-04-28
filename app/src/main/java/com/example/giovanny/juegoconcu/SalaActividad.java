@@ -31,14 +31,14 @@ public class SalaActividad extends AppCompatActivity {
         if (extras != null) {
             CurrentIP = extras.getString("CurrentIP");
             ServidorIP = extras.getString("ServidorIP");
+            setHost(ServidorIP);
+
             if(CurrentIP.equals(ServidorIP)){//es un servidor
-                setHost(ServidorIP);
                 Thread socketServerThread = new Thread(new SocketServerThread(this));
                 socketServerThread.start();
             }
             else{//es un cliente
                 Client myClient = new Client(this, ServidorIP,socketServerPORT,tGuestIP);
-                setHost(ServidorIP);
                 myClient.execute();
             }
         }

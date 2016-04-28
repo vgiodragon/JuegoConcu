@@ -45,10 +45,11 @@ public class SocketServerThread extends Thread {
                     }
                 });
 
-                SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
+                /*SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
                         new SocketServerReplyThread(activity, socket,activity.getMessage());
                 socketServerReplyThread.run();
-
+                */
+                Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
 
                ///Voy a esperar un mensaje del cliente
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(

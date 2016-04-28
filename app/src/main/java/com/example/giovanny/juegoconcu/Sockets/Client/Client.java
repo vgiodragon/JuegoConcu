@@ -37,22 +37,22 @@ public class Client extends AsyncTask<Void, Void, Void> {
 
         try {
             socket = new Socket(dstAddress, dstPort);
-
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
+            //RECIBO MENSAJE
+            /*ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(
                     1024);
             byte[] buffer = new byte[1024];
 
             int bytesRead;
             InputStream inputStream = socket.getInputStream();
 
-         /*
-          * notice: inputStream.read() will block if no data return
-          */
+
+          //notice: inputStream.read() will block if no data return
+
             while ((bytesRead = inputStream.read(buffer)) != -1) {///ESPERO MENSAJE!!
                 byteArrayOutputStream.write(buffer, 0, bytesRead);
                 response += byteArrayOutputStream.toString("UTF-8");
             }
-
+            */
 
 
             SocketServerReplyThread socketServerReplyThread =///MANDO MENSAJE
