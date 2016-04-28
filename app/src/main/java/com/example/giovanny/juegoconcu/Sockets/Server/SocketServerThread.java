@@ -59,7 +59,7 @@ public class SocketServerThread extends Thread {
                 activity.Mandar(socket, "Estado Servidor :"+estado);
                 //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
                 respuesta= activity.Recibir(socket);
-                Log.d("gioTo", respuesta);
+                //Log.d("gioTo", respuesta);
                 HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
                 hc.start();
             }

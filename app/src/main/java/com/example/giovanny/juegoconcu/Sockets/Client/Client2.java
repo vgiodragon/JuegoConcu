@@ -42,7 +42,7 @@ public class Client2 extends Thread {
             socket = new Socket(dstAddress, dstPort);
 
             String aux=activity.Recibir(socket);
-            Log.d("gioTo", aux);
+            //Log.d("gioTo", aux);
 
             HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
             hc.start();

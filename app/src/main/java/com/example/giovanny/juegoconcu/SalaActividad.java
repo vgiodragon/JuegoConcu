@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
-import com.example.giovanny.juegoconcu.Sockets.Client.Client;
 import com.example.giovanny.juegoconcu.Sockets.Client.Client2;
 import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
 
