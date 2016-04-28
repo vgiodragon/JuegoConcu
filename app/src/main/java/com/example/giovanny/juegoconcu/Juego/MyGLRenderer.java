@@ -38,11 +38,13 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     boolean dentroY;
 
 
-    public MyGLRenderer(Context ctx){
+    public MyGLRenderer(Context ctx, Usuario user, ArrayList<Usuario> adversarios){
 
         pantalla = new Pantalla();///limite de x:12.10   y:6.20
-        user = new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
-        versus = new Versus(user);
+        //user = new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
+        this.user=user;
+        this.adversarios=adversarios;
+        versus = new Versus(user,adversarios);
         Mx=My=0f;
         bbx=bby=0f;
 

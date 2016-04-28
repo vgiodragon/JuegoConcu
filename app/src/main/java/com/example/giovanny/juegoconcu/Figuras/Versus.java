@@ -22,11 +22,10 @@ public class Versus {
     private int cantFuego;
 
 
-    public Versus(Usuario user){
+    public Versus(Usuario user, ArrayList<Usuario> adversarios){
         this.user=user;
 
-        adversarios = new ArrayList<>();
-        adversarios.add(new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f));
+        this.adversarios =adversarios;
 
         cantFuego=2;
 

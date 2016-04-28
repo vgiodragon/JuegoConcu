@@ -16,6 +16,7 @@ import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerThread;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -27,8 +28,8 @@ public class SalaActividad extends AppCompatActivity {
     String ServidorIP="";
     String message = "";
 
-    private ArrayList<Usuario> adversarios;
-    private Usuario user;
+    ArrayList<Usuario> adversarios;
+    Usuario user;
 
     static final int socketServerPORT = 8081;
 
@@ -74,6 +75,8 @@ public class SalaActividad extends AppCompatActivity {
 
     public void LaunchGame(View view) {
         Intent intent = new Intent(this, JuegoActividad.class);
+        intent.putExtra("usuario", (Serializable) user);
+        intent.putExtra("adversarios", (Serializable)adversarios);
         startActivity(intent);
     }
 
