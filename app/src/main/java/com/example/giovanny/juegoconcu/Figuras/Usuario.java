@@ -38,8 +38,8 @@ public class Usuario {
         bb12 = new Cuadrado(Sbb,false);
         logo = new Cuadrado(log1,false);
         logo2 = new Cuadrado(log2,false);
-        this.xo=xo;
-        this.yo=yo;
+        this.xi=this.xo=xo;
+        this.yi=this.yo=yo;
         this.vida=vida;
     }
 
