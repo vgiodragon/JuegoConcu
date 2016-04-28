@@ -3,15 +3,11 @@ package com.example.giovanny.juegoconcu.Sockets.Client;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.giovanny.juegoconcu.Figuras.Usuario;
-import com.example.giovanny.juegoconcu.HiloConexion;
 import com.example.giovanny.juegoconcu.SalaActividad;
-import com.example.giovanny.juegoconcu.VUsuario;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 /**
  * Created by giovanny on 28/04/16.
@@ -23,16 +19,12 @@ public class Client2 extends Thread {
     String response = "";
     TextView textResponse;
     SalaActividad activity;
-    private ArrayList<Usuario> adversarios;
-    private VUsuario user;
 
-    public Client2(SalaActividad activity , String addr, int port, TextView textResponse, VUsuario user,ArrayList<Usuario> adversarios) {
+    public Client2(SalaActividad activity , String addr, int port, TextView textResponse) {
         dstAddress = addr;
         dstPort = port;
         this.textResponse = textResponse;
         this.activity=activity;
-        this.user=user;
-        this.adversarios=adversarios;
     }
 
     @Override
@@ -43,10 +35,18 @@ public class Client2 extends Thread {
             socket = new Socket(dstAddress, dstPort);
 
             String aux=activity.Recibir(socket);
-            Log.d("gioTo", aux);
+            activity.addMessage(aux);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    activity.setGuestIP();
+                }
+            });
 
-            HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
-            hc.start();
+            Log.d("gioTo", "Recibi"+aux);
+
+            //HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
+            //hc.start();
 
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block

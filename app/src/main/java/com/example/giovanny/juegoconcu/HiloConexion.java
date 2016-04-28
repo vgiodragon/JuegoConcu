@@ -3,6 +3,7 @@ package com.example.giovanny.juegoconcu;
 import android.util.Log;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
+import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -13,15 +14,17 @@ import java.util.ArrayList;
  */
 public class HiloConexion extends Thread {
     Socket socket;
-    SalaActividad activity;
+    JuegoActividad activity;
     private ArrayList<Usuario> adversarios;
-    private VUsuario user;
+    private Usuario user;
+    private Usuario adver;
 
-    public HiloConexion(Socket socket, SalaActividad activity,VUsuario user,ArrayList<Usuario> adversarios){
+    public HiloConexion(Socket socket, JuegoActividad activity, Usuario user,ArrayList<Usuario> adversarios){
         this.socket=socket;
         this.activity=activity;
         this.user=user;
         this.adversarios=adversarios;
+
     }
 
     @Override
@@ -31,9 +34,11 @@ public class HiloConexion extends Thread {
             String respuesta="";
             estado=user.getEstado();
             try {
-                activity.Mandar(socket, "Estado del Otro :"+estado);
+                activity.Mandar(socket,estado);
+                adver=adversarios.get(0);
                 respuesta= activity.Recibir(socket);
-                Log.d("gioTo", respuesta);
+                adver.setEstado(respuesta);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

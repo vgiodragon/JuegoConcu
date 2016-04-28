@@ -107,7 +107,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // Translate right, relative to the previous translation ( NEW )
         pantalla.Draw( gl, Mx, My, user.getVida());
         user.draw(gl, bbx, bby);
-        versus.draw(gl, bbx, bby);
+        versus.draw(gl);
         // Update the rotational angle after each refresh.
 
         VerificoX();

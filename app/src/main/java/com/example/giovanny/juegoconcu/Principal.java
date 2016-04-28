@@ -20,6 +20,10 @@ import java.net.UnknownHostException;
 import java.nio.ByteOrder;
 
 public class Principal extends AppCompatActivity {
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 
     TextView tip1;
     EditText tserver;

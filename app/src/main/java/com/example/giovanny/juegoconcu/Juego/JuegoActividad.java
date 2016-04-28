@@ -1,49 +1,64 @@
 package com.example.giovanny.juegoconcu.Juego;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
 import com.example.giovanny.juegoconcu.R;
-import com.example.giovanny.juegoconcu.VUsuario;
+import com.example.giovanny.juegoconcu.Sockets.Client.ClienteJuego;
+import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerJuego;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class JuegoActividad extends AppCompatActivity {
 
     MyGLSurfaceView mGLView;
-    VUsuario vuser;
-    VUsuario vadver;
     Usuario user;
-    Usuario adver;
     ArrayList<Usuario> adversarios;
+
+    static final int socketServerPORT = 8082;
+    String ServidorIP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_juego);
         // Create a GLSurfaceView instance and set it
-        Intent intent = getIntent();
-        //user= intent.getParcelableExtra("usuario");
-        //Bundle b = intent.getExtras();
-        //if (b != null)
-        vuser= (VUsuario) intent.getSerializableExtra("vusuarioN");
-        vuser.setXo(1f);
-        vuser.setYo(1f);
-        user=new Usuario(vuser);
-        user.InicioLyC();
+        //Intent intent = getIntent();
+        boolean isServer;
+        Bundle extras = getIntent().getExtras();
+        if(extras == null) {
+            isServer = false;
+        } else {
+            isServer = extras.getBoolean("isServer");
+            ServidorIP = extras.getString("ServidorIP");
+        }
+        if(isServer){
+            user=new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
+            //adver=new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f);
+            adversarios = new ArrayList<>();
+            adversarios.add(new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f));
+            Thread socketServerThread = new Thread(new SocketServerJuego(this,user,adversarios));
+            socketServerThread.start();
+        }
+        else{
+            user=new Usuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,50);
+            adversarios = new ArrayList<>();
+            adversarios.add(new Usuario(R.drawable.bb1,R.drawable.bb12,-4f,0f));
+            ClienteJuego myClient = new ClienteJuego(this, ServidorIP,socketServerPORT,user,adversarios);
+            myClient.start();
+        }
 
-        //adver= (Usuario)intent.getSerializableExtra("adversario1");
-        //adver.InicioC();
-        adversarios= new ArrayList<>();
-        //adversarios.add(adver);
 
         // as the ContentView for this Activity
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        mGLView = new MyGLSurfaceView(this,displaymetrics.heightPixels,displaymetrics.widthPixels,user,adversarios);
+        mGLView = new MyGLSurfaceView(this,displaymetrics.heightPixels,displaymetrics.widthPixels, user , adversarios);
         setContentView(mGLView);
 
     }
@@ -67,4 +82,32 @@ public class JuegoActividad extends AppCompatActivity {
         mGLView.onResume();
     }
 
+
+    public void Mandar(Socket socket,String mnsj) throws IOException {
+        DataOutputStream dOut;
+        try {
+            dOut = new DataOutputStream(socket.getOutputStream());
+            dOut.writeUTF(mnsj);
+            dOut.flush(); // Send off the data
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public String Recibir(Socket socket){
+        String respuesta="";
+
+        try {
+            //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
+            DataInputStream dIn = new DataInputStream(socket.getInputStream());
+            respuesta=dIn.readUTF();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return respuesta;
+    }
 }

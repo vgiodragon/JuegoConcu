@@ -20,7 +20,7 @@ import javax.microedition.khronos.opengles.GL10;
 /**
  * Created by giovanny on 20/04/16.
  */
-public class Cuadrado implements Serializable {
+public class Cuadrado {
     private FloatBuffer vertexBuffer;  // Buffer for vertex-array
     private FloatBuffer texBuffer;    // Buffer for texture-coords-array (NEW)
 

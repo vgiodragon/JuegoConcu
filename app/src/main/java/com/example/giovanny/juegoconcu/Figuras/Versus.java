@@ -40,10 +40,10 @@ public class Versus {
         }
     }
 
-    public void draw(GL10 gl,float bbx,float bby) {
+    public void draw(GL10 gl) {
         Fire.draw(gl);
         for(Usuario element: adversarios){
-            element.draw2(gl,0f,0f);
+            element.draw2(gl);
         }
         quitaVida();
     }

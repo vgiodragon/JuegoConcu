@@ -1,57 +1,51 @@
 package com.example.giovanny.juegoconcu.Sockets.Client;
 
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
 import com.example.giovanny.juegoconcu.Figuras.Usuario;
+import com.example.giovanny.juegoconcu.HiloConexion;
+import com.example.giovanny.juegoconcu.Juego.JuegoActividad;
 import com.example.giovanny.juegoconcu.SalaActividad;
-import com.example.giovanny.juegoconcu.Sockets.Server.SocketServerReplyThread;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
- * Created by giovanny on 27/04/16.
+ * Created by giovanny on 28/04/16.
  */
-public class Client extends AsyncTask<Void, Void, Void> {
+public class ClienteJuego extends Thread {
 
     String dstAddress;
     int dstPort;
     String response = "";
-    TextView textResponse;
-    SalaActividad activity;
-    private ArrayList<Usuario> adversarios;
-    private Usuario user;
+    JuegoActividad activity;
+    Usuario user;
+    ArrayList<Usuario> adversarios;
 
-    public Client(SalaActividad activity , String addr, int port, TextView textResponse, Usuario user,ArrayList<Usuario> adversarios) {
+    public ClienteJuego(JuegoActividad activity , String addr, int port,Usuario user,ArrayList<Usuario> adversarios) {
         dstAddress = addr;
         dstPort = port;
-        this.textResponse = textResponse;
         this.activity=activity;
         this.user=user;
         this.adversarios=adversarios;
     }
 
     @Override
-    protected Void doInBackground(Void... arg0) {
-
+    public void run() {
         Socket socket = null;
 
         try {
             socket = new Socket(dstAddress, dstPort);
 
-            activity.Recibir(socket);
+            String aux=activity.Recibir(socket);
 
-            activity.Mandar(socket, "desde el CLIENTE!!!");
-            //Log.d("HILO", "Ahora voy a recibir lo del servidor");
+            Log.d("gioTo", "Recibi" + aux);
 
+            HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
+            hc.start();
 
         } catch (UnknownHostException e) {
             // TODO Auto-generated catch block
@@ -72,13 +66,5 @@ public class Client extends AsyncTask<Void, Void, Void> {
             }
         }
 
-        return null;
     }
-
-    @Override
-    protected void onPostExecute(Void result) {
-        textResponse.setText(response);
-        super.onPostExecute(result);
-    }
-
 }

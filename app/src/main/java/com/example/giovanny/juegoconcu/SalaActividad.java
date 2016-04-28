@@ -27,14 +27,7 @@ public class SalaActividad extends AppCompatActivity {
     String CurrentIP="";
     String ServidorIP="";
     String message = "";
-
-    //ArrayList<Usuario> adversarios;
-
-    VUsuario user;
-    //Settings.Global Usuario user;
-    Usuario adver;
-    ArrayList<Usuario> adversarios;
-
+    boolean isServer;
     static final int socketServerPORT = 8081;
 
 
@@ -45,6 +38,7 @@ public class SalaActividad extends AppCompatActivity {
 
         tHostIP = (TextView)findViewById(R.id.tHost);
         tGuestIP = (TextView)findViewById(R.id.tGuestIPs);
+        isServer =false;
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -53,22 +47,12 @@ public class SalaActividad extends AppCompatActivity {
             setHost(ServidorIP);
 
             if(CurrentIP.equals(ServidorIP)){//es un servidor
-                user=new VUsuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
-                //adversarios = new ArrayList<>();
-                //adversarios.add(new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f));
-                adver=new Usuario(R.drawable.bb3,R.drawable.bb32,0f,0f);
-                adversarios = new ArrayList<>();
-                adversarios.add(adver);
-                Thread socketServerThread = new Thread(new SocketServerThread(this,user,adversarios));
+                Thread socketServerThread = new Thread(new SocketServerThread(this));
                 socketServerThread.start();
+                isServer=true;
             }
             else{//es un cliente
-                user=new VUsuario(R.drawable.bb3,R.drawable.bb32,R.drawable.dragun,R.drawable.dragun12,0f,0f,50);
-
-                adver=new Usuario(R.drawable.bb1,R.drawable.bb12,-4f,0f);
-                adversarios = new ArrayList<>();
-                adversarios.add(adver);
-                Client2 myClient = new Client2(this, ServidorIP,socketServerPORT,tGuestIP,user,adversarios);
+                Client2 myClient = new Client2(this, ServidorIP,socketServerPORT,tGuestIP);
                 myClient.start();
             }
         }
@@ -84,12 +68,13 @@ public class SalaActividad extends AppCompatActivity {
 
     public void LaunchGame(View view) {
         Intent intent = new Intent(this, JuegoActividad.class);
-        intent.putExtra("vusuarioN", user);
+        intent.putExtra("isServer",isServer);
+        intent.putExtra("ServidorIP",ServidorIP);
         startActivity(intent);
     }
 
     private void setHost(String ip){
-        tHostIP.setText("Player 1 _ "+ip);
+        tHostIP.setText("Player 1 _ " + ip);
     }
 
     public void setGuestIP(){
@@ -104,7 +89,6 @@ public class SalaActividad extends AppCompatActivity {
             dOut.writeUTF(mnsj);
             dOut.flush(); // Send off the data
 
-            //dOut.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,14 +97,11 @@ public class SalaActividad extends AppCompatActivity {
 
     public String Recibir(Socket socket){
         String respuesta="";
-        ///Voy a esperar un mensaje del cliente
 
         try {
             //Log.d("HILO","socket:Closed "+socket.isClosed()+"_conected:"+socket.isConnected());
             DataInputStream dIn = new DataInputStream(socket.getInputStream());
             respuesta=dIn.readUTF();
-
-            //Log.d("HILO", "respuesta: "+respuesta);
 
         } catch (IOException e) {
             e.printStackTrace();

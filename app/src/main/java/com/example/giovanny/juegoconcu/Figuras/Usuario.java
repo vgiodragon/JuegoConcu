@@ -1,17 +1,14 @@
 package com.example.giovanny.juegoconcu.Figuras;
 
 import android.content.Context;
-
-import com.example.giovanny.juegoconcu.VUsuario;
-
-import java.io.Serializable;
+import android.util.Log;
 
 import javax.microedition.khronos.opengles.GL10;
 
 /**
  * Created by giovanny on 21/04/16.
  */
-public class Usuario implements Serializable {
+public class Usuario {
 
     Cuadrado bb1;
     Cuadrado bb12;
@@ -26,7 +23,6 @@ public class Usuario implements Serializable {
 
     float xo,yo;
     float xi,yi;
-    VUsuario vu;
 
     public float getYi() {
         return yi;
@@ -38,17 +34,6 @@ public class Usuario implements Serializable {
 
     int vida;
 
-    public Usuario(VUsuario vu){
-        this.vu= vu;
-        this.bb=vu.getBb();
-        this.Sbb=vu.getSbb();
-        this.xi=this.xo=vu.getXo();
-        this.yi=this.yo=vu.getYo();
-        this.vida=vu.getVida();
-        this.log1=vu.getLog1();
-        this.log2=vu.getLog2();
-    }
-
     public Usuario(int bb,int Sbb, int log1, int log2,float xo,float yo,int vida){
         this.bb=bb;
         this.Sbb=Sbb;
@@ -57,7 +42,7 @@ public class Usuario implements Serializable {
         this.vida=vida;
         this.log1=log1;
         this.log2=log2;
-
+        InicioLyC();
     }
 
     public Usuario(int bb,int Sbb, float xo,float yo){
@@ -67,6 +52,7 @@ public class Usuario implements Serializable {
         bb12 = new Cuadrado(this.Sbb,false);
         this.xi=this.xo=xo;
         this.yi=this.yo=yo;
+        InicioC();
     }
 
     public void InicioC(){
@@ -112,18 +98,12 @@ public class Usuario implements Serializable {
         angleCube=angleCube%360;
     }
 
-    public void draw2(GL10 gl,float bbx,float bby){
+    public void draw2(GL10 gl){
         gl.glPushMatrix();
-
-        xi=xo + bbx;
-        yi=yo + bby;
-        vu.setXi(xi);
-        vu.setYi(yi);
 
         gl.glPushMatrix();
         gl.glScalef(0.4f, 0.4f, 0.4f);
         gl.glTranslatef(xi, yi, -14.0f);
-        //Log.d("choco", "xo: " + (xo + bbx)+"_yo: "+(yo + bby));
         gl.glRotatef(angleCube, 0f, 0f, 1f); // Rotate
         if(activado)
             bb12.draw(gl);                       // Draw quad ( NEW )
@@ -165,11 +145,15 @@ public class Usuario implements Serializable {
     }
 
     public String getEstado(){
-        return xi+"&&"+yi+"&&"+activado;
+        return xi+"__"+yi+"__"+activado;
     }
 
-    public void setEstado(){
-
+    public void setEstado(String est){
+        Log.d("gioTo",est);
+        String [] parte=est.split("__");
+        xi=Float.parseFloat(parte[0]);
+        yi=Float.parseFloat(parte[1]);
+        activado=Boolean.parseBoolean(parte[2]);
     }
 
     public boolean getActivado() {
