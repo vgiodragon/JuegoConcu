@@ -33,7 +33,7 @@ public class HiloConexion extends Thread {
             try {
                 activity.Mandar(socket, "Estado Servidor :"+estado);
                 respuesta= activity.Recibir(socket);
-                Log.d("gioTo", respuesta);
+                //Log.d("gioTo", respuesta);
             } catch (IOException e) {
                 e.printStackTrace();
             }

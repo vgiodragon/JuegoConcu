@@ -44,7 +44,7 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         //user = new Usuario(R.drawable.bb1,R.drawable.bb12,R.drawable.dragun,R.drawable.dragun12,-4f,0f,50);
         this.user=user;
         this.adversarios=adversarios;
-        versus = new Versus(user,adversarios);
+        versus = new Versus(this.user,this.adversarios);
         Mx=My=0f;
         bbx=bby=0f;
 

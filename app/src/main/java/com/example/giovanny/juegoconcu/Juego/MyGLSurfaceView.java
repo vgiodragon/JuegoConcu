@@ -25,7 +25,9 @@ public class MyGLSurfaceView extends GLSurfaceView {
         super(context);
         height = h;
         width = w;
-        mRenderer = new MyGLRenderer(context,user,adversarios);
+        this.user=user;
+        this.adversarios=adversarios;
+        mRenderer = new MyGLRenderer(context,this.user,this.adversarios);
         Xo=3*width/40;
         Yo=7*height/9;
         // Set the Renderer for drawing on the GLSurfaceView
