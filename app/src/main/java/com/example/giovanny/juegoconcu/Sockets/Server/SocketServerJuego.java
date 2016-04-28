@@ -20,7 +20,7 @@ public class SocketServerJuego extends Thread {
     JuegoActividad activity;
     Usuario user;
     ArrayList<Usuario> adversarios;
-
+    HiloConexion hc;
     public SocketServerJuego(JuegoActividad activity, Usuario user,ArrayList<Usuario> adversarios){
         this.activity=activity;
         this.user=user;
@@ -33,7 +33,7 @@ public class SocketServerJuego extends Thread {
             serverSocket = new ServerSocket(socketServerPORT);
             while (true) {
                 Socket socket = serverSocket.accept();
-                HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
+                hc=new HiloConexion(socket,activity,user,adversarios);
                 hc.start();
             }
 
@@ -43,4 +43,7 @@ public class SocketServerJuego extends Thread {
         }
     }
 
+    public void onDestroy(){
+        hc.onDestroy();
+    }
 }

@@ -44,4 +44,12 @@ public class HiloConexion extends Thread {
             }
         }
     }
+
+    public void onDestroy(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

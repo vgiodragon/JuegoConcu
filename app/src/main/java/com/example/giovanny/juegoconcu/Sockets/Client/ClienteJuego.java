@@ -22,6 +22,7 @@ public class ClienteJuego extends Thread {
     JuegoActividad activity;
     Usuario user;
     ArrayList<Usuario> adversarios;
+    HiloConexion hc;
 
     public ClienteJuego(JuegoActividad activity , String addr, int port,Usuario user,ArrayList<Usuario> adversarios) {
         dstAddress = addr;
@@ -41,7 +42,7 @@ public class ClienteJuego extends Thread {
 
             //Log.d("gioTo", "Recibi" + aux);
 
-            HiloConexion hc=new HiloConexion(socket,activity,user,adversarios);
+            hc=new HiloConexion(socket,activity,user,adversarios);
             hc.start();
 
         } catch (UnknownHostException e) {
@@ -54,14 +55,13 @@ public class ClienteJuego extends Thread {
             response = "IOException: " + e.toString();
         } finally {
             if (socket != null) {
-              /*  try {
-                    socket.close();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }*/
+
             }
         }
 
+    }
+
+    public void onDestroy(){
+        hc.onDestroy();
     }
 }
